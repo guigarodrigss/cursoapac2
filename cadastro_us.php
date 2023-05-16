@@ -1,18 +1,17 @@
 
 <?php
 include('conexao.php');
-// Verifique se o formulário foi enviado
+
 if(isset($_POST['enviar'])){
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Coleta os dados do formulário
     $nome = $_POST["nome"]; 
     $senha = $_POST["senha"];
     $telefone = $_POST["telefone"];
     $setor = $_POST["setor"];
     $permissao = $_POST["permissao"];
-    // Executa uma consulta SQL para inserir os dados na tabela
-    $sql = "INSERT INTO usuario (nomeCompleto, senha, telefone, setor, permissao) VALUES ('$nome', '$senha', '$telefone','$setor','$permissao')";
+
+    $sql = "INSERT INTO usuario (nome, senha, telefone, setor, permissao) VALUES ('$nome', '$senha', '$telefone','$setor','$permissao')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Dados inseridos com sucesso";
@@ -41,13 +40,13 @@ mysqli_close($conn);
                 <h1 class="form_titulo">Criar Usuário</h1>
 
                 <label class="form_label" for="nome"></label>
-                <input class="form_input" type="text" placeholder="Nome Completo" name="nome" id = "nome" required>
+                <input class="form_input" type="text" placeholder="Nome Completo" name="nome" id = "nome" >
                 <label class="form_label" for="senha"></label>
-                <input class="form_input" type="password" placeholder="Crie uma Senha" name="senha" id = "senha"required>
+                <input class="form_input" type="password" placeholder="Crie uma Senha" name="senha" id = "senha">
                 <label class="form_label" for="telefone"></label>
-                <input class="form_input" type="number" placeholder="Número de Telefone" name="telefone" id = "telefone" required>
+                <input class="form_input" type="number" placeholder="Número de Telefone" name="telefone" id = "telefone" >
                 <label for="permissao">Escolha a permissão:</label>
-                <select class="form-select" aria-label="Default select example" name="setor" id="setor"  required>
+                <select class="form-select" aria-label="Default select example" name="setor" id="setor"  >
                     <option selected></option>
                     <option value="nivel rio">Nível do Rio</option>
                     <option value="Volume da Chuva">Volume da Chuva</option>
@@ -55,14 +54,15 @@ mysqli_close($conn);
                     <option value="Todos os campos">Todos os campos</option>
                 </select>
                 <label for="permissao">Escolha o Tipo de acesso:</label>
-                <select class="form-select" aria-label="Default select example" name="permissao" id="permissao"  required>
+                <select class="form-select" aria-label="Default select example" name="permissao" id="permissao"  >
                     <option selected></option>
-                    <option value="1">administrador</option>
-                    <option value="0">usuario</option>
+                    <option value="1">Administrador</option>
+                    <option value="0">Usuário</option>
                 </select>
                 <button type="submit" class="button" name = "enviar">Criar usuário</button>
                 <img class="form_img" src="/CURSOAPAC2/assets/imgs/Logo_apac.png" alt="Logo Apac">
             </form>
+            <button><a href="paineladmin.php">Sair</button>
         </div>
     </main>
 </body>

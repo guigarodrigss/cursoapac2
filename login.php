@@ -34,12 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe o valor do campo de permissão e nome completo do usuário encontrado
     $usuario = mysqli_fetch_assoc($resultado);
     $permissao = $usuario['permissao'];
-    $nomeCompleto = $usuario['nomeCompleto'];
+    $nome = $usuario['nome'];
     $setor = $usuario['setor'];
     // Armazena informações do usuário na sessão
+    $_SESSION['id'] = $usuario['id'];
     $_SESSION['telefone'] = $telefone;
     $_SESSION['permissao'] = $permissao;
-    $_SESSION['nomeCompleto'] = $nomeCompleto;
+    $_SESSION['nome'] = $nome;
     $_SESSION['setor'] = $setor;
     
     
