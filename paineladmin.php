@@ -1,6 +1,5 @@
 <?php 
 session_start();
-// Conecte-se ao banco de dados MySQL
 include("conexao.php");
 
 ?>
@@ -34,7 +33,7 @@ include("conexao.php");
         <h3 class="mb-5">Configurações de Dados</h3>
         <div class="d-flex flex-column gap-3">
           <a href="listar_dados.php"><button class = "btn btn-primary">Listar Dados</button></a>
-          <a href="#"><button class = "btn btn-primary">Exportar dados(csv)</button></a>
+          <a href="exportarDados.php"><button class = "btn btn-primary">Exportar dados(csv)</button></a>
         </div>
     </div>
   </div>

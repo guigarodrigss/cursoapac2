@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 }
-// Fecha a conexão com o banco de dados
 mysqli_close($conn);
 ?>
 
@@ -60,9 +59,9 @@ mysqli_close($conn);
                     <option value="0">Usuário</option>
                 </select>
                 <button type="submit" class="button" name = "enviar">Criar usuário</button>
+                <button><a href="paineladmin.php">Voltar</button>
                 <img class="form_img" src="/CURSOAPAC2/assets/imgs/Logo_apac.png" alt="Logo Apac">
             </form>
-            <button><a href="paineladmin.php">Sair</button>
         </div>
     </main>
 </body>

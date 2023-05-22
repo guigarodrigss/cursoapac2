@@ -5,8 +5,6 @@ include('conexao.php');
 $setor = $_SESSION['setor'];
 $id = $_SESSION['id'];
 
-echo $setor;
-
 $nivelRioDisabled = '';
 $volumeChuvaDisabled = '';
 $nivelReservatorioDisabled = '';
@@ -87,7 +85,7 @@ mysqli_close($conn);
             <input class="form_input" type="text" placeholder="Insira o nível do reservatório" id="user_pass" name = "nivel_reservatorio" <?php echo $nivelReservatorioDisabled ?>>
             <button type="submit" class="button" name ="enviar">Enviar</button>
                 <br>
-            <button type="submit" name="logout">Sair</button>
+            <button type="submit" name="logout"><a href="logout.php">Sair</button>
             <img class="form_img" src="/CURSOAPAC2/assets/imgs/Logo_apac.png" alt="Logo Apac">
         </form>
     </div>

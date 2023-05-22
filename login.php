@@ -1,67 +1,87 @@
 <?php
-
-// Inclui o arquivo de conexão com o banco de dados
 include('conexao.php');
 session_start();
-// Inicia a sessão
 
-// Verifica se o formulário foi submetido
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
-  // Verifica se o campo de telefone foi preenchido
   if (empty($_POST['telefone'])) {
     echo "Preencha seu telefone.";
     exit;
   }
   
-  // Verifica se o campo de senha foi preenchido
   if (empty($_POST['senha'])) {
     echo "Preencha sua senha.";
     exit;
   }
   
-  // Recebe os valores dos campos do formulário
   $telefone = $_POST['telefone'];
   $senha = $_POST['senha'];
   
-  // Faz a consulta no banco de dados para verificar se o usuário e senha estão corretos
   $sql = "SELECT * FROM usuario WHERE telefone = '$telefone' AND senha = '$senha'";
   $resultado = mysqli_query($conn, $sql);
   
-  // Verifica se encontrou um usuário com o telefone e senha informados
   if (mysqli_num_rows($resultado) == 1) {
     
-    // Recebe o valor do campo de permissão e nome completo do usuário encontrado
     $usuario = mysqli_fetch_assoc($resultado);
     $permissao = $usuario['permissao'];
     $nome = $usuario['nome'];
     $setor = $usuario['setor'];
-    // Armazena informações do usuário na sessão
+    $id = $usuario['id'];
+
     $_SESSION['id'] = $usuario['id'];
     $_SESSION['telefone'] = $telefone;
     $_SESSION['permissao'] = $permissao;
     $_SESSION['nome'] = $nome;
     $_SESSION['setor'] = $setor;
     
-    
-    // Verifica o valor do campo de permissão e redireciona para a página correspondente
-    if ($permissao == 0) {
-      header("Location: formulario.php");
-      exit;
-    } elseif ($permissao == 1) {
-      header("Location: paineladmin.php");
-      exit;
+    function verificarEnvioUsuario($conn, $id) {
+      $currentDateTime = new DateTime();
+      $currentDateTime->setTimezone(new DateTimeZone('UTC'));
+      $currentDate = $currentDateTime->format('Y-m-d');
+  
+      $sqlDados = "SELECT data_hora FROM dados WHERE id = $id";
+      $result = $conn->query($sqlDados);
+  
+      
+      
+      if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $lastDateTime = new DateTime($row["data_hora"]);
+        $lastDateTime->setTimezone(new DateTimeZone('UTC'));
+        $lastDate = $lastDateTime->format('Y-m-d');
+  
+  
+        if ($lastDate != $currentDate) {
+          $diff = $currentDateTime->diff($lastDateTime);
+          if ($diff->days == 0 && $diff->h < 24) {
+            return true;
+          }
+        }
+      }
+  
+      return false;
+    }
+      
+    if (verificarEnvioUsuario($conn, $id)) {
+      echo "Você já enviou os dados hoje. Tente novamente após 24 horas.";
+    } else {
+
+          if ($permissao == 0) {
+            header("Location: formulario.php");
+            exit;
+          } elseif ($permissao == 1) {
+            header("Location: paineladmin.php");
+            exit;
+          }
+        }
+      } else {
+        echo "Usuário ou senha inválidos.";
+      }
     }
     
-  } else {
-    echo "Usuário ou senha inválidos.";
-  }
-  
-}
+
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
